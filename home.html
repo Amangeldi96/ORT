@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+    body { min-height:100vh; background:#f4f6fb; font-family: sans-serif; }
+
+    .navbar {
+        position:fixed;
+        bottom:0;
+        left:0;
+        width:100%;
+        height:70px;
+        background:#fff;
+        display:flex;
+        justify-content:space-around;
+        align-items:center;
+        box-shadow: 0 -5px 20px rgba(0,0,0,.05);
+        z-index:1000;
+        padding: 0 5px;
+    }
+
+    .nav-item {
+        position: relative;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 15px;
+        border-radius: 25px;
+        text-decoration: none;
+        color: #6366f1;
+        transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 2;
+    }
+
+    /* Индикаторду баскычтардын алдына коюу */
+    .indicator {
+        position: absolute;
+        top: 10px;
+        height: 50px;
+        background: #eef0ff;
+        border-radius: 25px;
+        transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1;
+    }
+
+    .nav-item span {
+        font-size: 12px;
+        font-weight: 600;
+        margin-left: 0;
+        opacity: 0;
+        width: 0;
+        overflow: hidden;
+        transition: 0.4s ease;
+        white-space: nowrap;
+    }
+
+    .nav-item.active span {
+        margin-left: 8px;
+        width: auto;
+        opacity: 1;
+    }
+
+    svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 2; fill: none; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="indicator" id="indicator"></div>
+
+    <a href="#" class="nav-item active" onclick="update(this)">
+        <svg viewBox="0 0 24 24"><path d="M3 10L12 3L21 10"></path><path d="M5 9V21H19V9"></path></svg>
+        <span>Главная</span>
+    </a>
+    <a href="#" class="nav-item" onclick="update(this)">
+        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20V22H6.5A2.5 2.5 0 0 1 4 19.5V4.5A2.5 2.5 0 0 1 6.5 2Z"></path></svg>
+        <span>Предмет</span>
+    </a>
+    <a href="#" class="nav-item" onclick="update(this)">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 8V12"></path><path d="M12 16H12.01"></path></svg>
+        <span>Тесты</span>
+    </a>
+    <a href="#" class="nav-item" onclick="update(this)">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21C4 17 7 15 12 15C17 15 20 17 20 21"></path></svg>
+        <span>Профиль</span>
+    </a>
+</nav>
+
+<script>
+    const indicator = document.getElementById('indicator');
+
+    function update(el) {
+        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+        el.classList.add('active');
+
+        // Индикатордун көлөмүн активдүү баскычтын көлөмүнө дал келтирүү
+        indicator.style.width = el.offsetWidth + 'px';
+        indicator.style.left = el.offsetLeft + 'px';
+    }
+
+    // Барак жүктөлгөндө индикаторду орнотуу
+    window.onload = () => update(document.querySelector('.nav-item.active'));
+</script>
+
+</body>
+</html>
